@@ -17,9 +17,6 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
-
-
-
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
@@ -34,8 +31,40 @@ FSJS project 2 - List Filter and Pagination
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+/*** 
+   * Global Scope
+***/
+const studentList = document.querySelectorAll('.student-item');
 
-
+const showPage = (list, page) => {
+  /*
+   Loop over items in the list parameter
+   -- If the index of a list item is ​>=​ the index of the first item that should be shown on the page
+   -- ​&&​ the list item index is ​<=​ the index of the last item that should be shown on the page, show it
+   */
+   var startPage = 0;
+   var endPage = 0;
+   if(page > 1){
+      startPage = (page * 10) -9;
+      endPage = (page * 10);
+     } else if(page === 1){
+      startPage = page - 1;
+      endPage = startPage + 9;
+     } else{
+        console.log('Please pass Number bigger than 0')
+     };
+   console.log(startPage);
+   console.log(endPage);
+  for(let i = 0; i < list.length; i++){
+      if(i >= startPage && i <= endPage){
+         list[i].style.display = '';
+      }else{
+         list[i].style.display = 'none';
+      }   
+   
+   }
+}
+showPage(studentList,6);
 
 
 /*** 
@@ -43,8 +72,17 @@ FSJS project 2 - List Filter and Pagination
    functionality to the pagination buttons.
 ***/
 
-
-
-
+const​ appendPageLinks = ​(​list)​ ​ => ​{ ​
+   //1. ​Determine how many pages are needed for the list by dividing the ​total number of list items by the max number of items per page
+   const numPages = Math.round(list/10);
+   //2. ​Create a d​iv,​ give it the “pagination” class, and append it to the .page div
+   //3. ​Add a u​ l​ to the “pagination” div to store the pagination links
+   //4. ​for​ every page, add l​ i​ and ​a​ tags with the page number text
+   //5. ​Add an event listener to each a​ ​ tag. When they are clicked
+   ​//call the showPage function to display the appropriate page
+   //6. Loop over pagination links to remove active class from all links
+   //7. Add the active class to the link that was just clicked. You can identify that
+   //clicked link using ​event.target ​
+   };
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
