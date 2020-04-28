@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
+
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 
@@ -32,57 +32,71 @@ FSJS project 2 - List Filter and Pagination
        "invoke" the function 
 ***/
 /*** 
-   * Global Scope
-***/
+ * Global Scope
+ ***/
 const studentList = document.querySelectorAll('.student-item');
 
 const showPage = (list, page) => {
-  /*
-   Loop over items in the list parameter
-   -- If the index of a list item is ​>=​ the index of the first item that should be shown on the page
-   -- ​&&​ the list item index is ​<=​ the index of the last item that should be shown on the page, show it
-   */
+   /*
+    Loop over items in the list parameter
+    -- If the index of a list item is ​>=​ the index of the first item that should be shown on the page
+    -- ​&&​ the list item index is ​<=​ the index of the last item that should be shown on the page, show it
+    */
    var startPage = 0;
    var endPage = 0;
-   if(page > 1){
-      startPage = (page * 10) -9;
-      endPage = (page * 10);
-     } else if(page === 1){
+   if (page > 1) {
+      startPage = (page * 10) - 10;
+      endPage = (page * 10) - 1;
+   } else if (page === 1) {
       startPage = page - 1;
       endPage = startPage + 9;
-     } else{
-        console.log('Please pass Number bigger than 0')
-     };
+   } else {
+      console.log('Please pass Number bigger than 0')
+   };
    console.log(startPage);
    console.log(endPage);
-  for(let i = 0; i < list.length; i++){
-      if(i >= startPage && i <= endPage){
+   for (let i = 0; i < list.length; i++) {
+      if (i >= startPage && i <= endPage) {
          list[i].style.display = '';
-      }else{
+      } else {
          list[i].style.display = 'none';
-      }   
-   
+      }
    }
 }
-showPage(studentList,6);
-
-
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
-
-const​ appendPageLinks = ​(​list)​ ​ => ​{ ​
-   //1. ​Determine how many pages are needed for the list by dividing the ​total number of list items by the max number of items per page
-   const numPages = Math.round(list/10);
-   //2. ​Create a d​iv,​ give it the “pagination” class, and append it to the .page div
-   //3. ​Add a u​ l​ to the “pagination” div to store the pagination links
-   //4. ​for​ every page, add l​ i​ and ​a​ tags with the page number text
-   //5. ​Add an event listener to each a​ ​ tag. When they are clicked
-   ​//call the showPage function to display the appropriate page
-   //6. Loop over pagination links to remove active class from all links
-   //7. Add the active class to the link that was just clicked. You can identify that
-   //clicked link using ​event.target ​
+const appendPageLinks = (list) => {
+   const numPages = Math.round(list.length / 10) + 1;
+   const pageDiv = document.querySelector('.page');
+   const div = document.createElement('div');
+   div.className = 'pagination';
+   pageDiv.appendChild(div);
+   const ul = document.createElement('ul');
+   div.appendChild(ul);
+   for (let i = 1; i <= numPages; i++) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      ul.appendChild(li);
+      li.appendChild(a);
+      a.textContent = i;
+      a.addEventListener('click', (e) => {
+         //call the showPage function to display the appropriate page
+         e.target.className = 'active';
+         const viewPage = parseInt(e.target.textContent);
+         showPage(list, viewPage);
+         const aOff = document.querySelectorAll('.pagination li a');
+         for (let i = 0; i < aOff.length; i++) {
+            aOff[i].className = '';
+         }
+      });
+      const aOff = document.querySelectorAll('.pagination li a');
+      for (let i = 0; i < aOff.length; i++) {
+         aOff[i].className = '';
+      }
    };
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+   //6. Loop over pagination links to remove active class from all links
+};
+appendPageLinks(studentList);
