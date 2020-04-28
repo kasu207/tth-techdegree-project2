@@ -53,8 +53,6 @@ const showPage = (list, page) => {
    } else {
       console.log('Please pass Number bigger than 0')
    };
-   console.log(startPage);
-   console.log(endPage);
    for (let i = 0; i < list.length; i++) {
       if (i >= startPage && i <= endPage) {
          list[i].style.display = '';
@@ -63,6 +61,7 @@ const showPage = (list, page) => {
       }
    }
 }
+showPage(studentList, 1);
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
@@ -81,22 +80,18 @@ const appendPageLinks = (list) => {
       ul.appendChild(li);
       li.appendChild(a);
       a.textContent = i;
+      if(a.textContent == 1){ a.className = 'active'};
       a.addEventListener('click', (e) => {
-         //call the showPage function to display the appropriate page
-         e.target.className = 'active';
          const viewPage = parseInt(e.target.textContent);
          showPage(list, viewPage);
-         const aOff = document.querySelectorAll('.pagination li a');
-         for (let i = 0; i < aOff.length; i++) {
-            aOff[i].className = '';
+         const links = document.querySelectorAll('a');
+         for (let i = 0; i < links.length; i++) {
+            links[i].className = '';
          }
+         e.target.className = 'active';
       });
-      const aOff = document.querySelectorAll('.pagination li a');
-      for (let i = 0; i < aOff.length; i++) {
-         aOff[i].className = '';
-      }
+
    };
 
-   //6. Loop over pagination links to remove active class from all links
 };
 appendPageLinks(studentList);
