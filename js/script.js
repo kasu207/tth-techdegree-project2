@@ -34,7 +34,8 @@ FSJS project 2 - List Filter and Pagination
 /*** 
  * Global Scope
  ***/
-const studentList = document.querySelectorAll('.student-item');
+const studentList = document.querySelectorAll('li.student-item');
+const pageLimit = 10;
 
 const showPage = (list, page) => {
    /*
@@ -45,11 +46,11 @@ const showPage = (list, page) => {
    var startPage = 0;
    var endPage = 0;
    if (page > 1) {
-      startPage = (page * 10) - 10;
-      endPage = (page * 10) - 1;
+      startPage = (page * pageLimit) - pageLimit;
+      endPage = (page * pageLimit);
    } else if (page === 1) {
       startPage = page - 1;
-      endPage = startPage + 9;
+      endPage = startPage + (pageLimit-1);
    } else {
       console.log('Please pass Number bigger than 0')
    };
@@ -61,7 +62,6 @@ const showPage = (list, page) => {
       }
    }
 }
-showPage(studentList, 1);
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
@@ -94,4 +94,40 @@ const appendPageLinks = (list) => {
    };
 
 };
+/*** 
+Searchbar 
+***/
+const searchBar = () => {
+   const page = document.querySelector('.page-header');
+   const searchDiv = document.createElement('div');
+
+   searchDiv.className = 'student-search';
+   const input = document.createElement('input');
+   const searchButton = document.createElement('button');
+   searchDiv.appendChild(input);
+   input.placeholder = 'Search for students...';
+   searchDiv.appendChild(searchButton);
+   searchButton.type = 'submit';
+   searchButton.textContent = 'Search';
+   page.appendChild(searchDiv);
+
+   //Variable to go through the student names
+   const studentNames = document.querySelectorAll('.student-details h3');
+   searchButton.addEventListener('keyup', (e) => {
+      e.preventDefault();
+      console.log(input.value);
+      search(input.value, studentNames);
+   });
+   // const search = (searchInput, names) => {
+   //    for (let i = 0; i < names.length; i++){
+   //       if(names[i].textContent.toLowerCase() ){
+
+   //       }
+   //    }
+   // };
+};
+
+//Call the functions
+searchBar();
+showPage(studentList, 1);
 appendPageLinks(studentList);
