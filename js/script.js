@@ -50,7 +50,7 @@ const showPage = (list, page) => {
       endPage = (page * pageLimit);
    } else if (page === 1) {
       startPage = page - 1;
-      endPage = startPage + (pageLimit-1);
+      endPage = startPage + (pageLimit - 1);
    } else {
       console.log('Please pass Number bigger than 0')
    };
@@ -80,7 +80,9 @@ const appendPageLinks = (list) => {
       ul.appendChild(li);
       li.appendChild(a);
       a.textContent = i;
-      if(a.textContent == 1){ a.className = 'active'};
+      if (a.textContent == 1) {
+         a.className = 'active'
+      };
       a.addEventListener('click', (e) => {
          const viewPage = parseInt(e.target.textContent);
          showPage(list, viewPage);
@@ -111,20 +113,37 @@ const searchBar = () => {
    searchButton.textContent = 'Search';
    page.appendChild(searchDiv);
 
+   //SearchFunction
    //Variable to go through the student names
    const studentNames = document.querySelectorAll('.student-details h3');
-   searchButton.addEventListener('keyup', (e) => {
+   /*    for (let i = 0; i < studentNames.length; i++){
+         console.log(studentNames[i].textContent);
+      }; */
+
+   const search = (searchInput, names) => {
+      for (let i = 0; i < names.length; i++) {
+         if ((searchInput.length !== 0) && (names[i].textContent.toLowerCase().includes(searchInput.toLowerCase()))) {
+            // 1c. Create a conditional that checks two conditions:
+            // 1ca. If the `searchInput.value.length` does not equal the digit zero AND `names[i].textContent.toLowerCase()` `includes` `searchInput.value.toLowerCase())`
+            // 1cb. Add the class name 'match` to `names[i]`
+            names[i].parentNode.parentNode.style.display = '';
+         } else {
+            names[i].parentNode.parentNode.style.display = 'none';
+         }
+      }
+   };
+
+   searchButton.addEventListener('click', (e) => {
       e.preventDefault();
+      console.log('Button clicked');
       console.log(input.value);
       search(input.value, studentNames);
    });
-   // const search = (searchInput, names) => {
-   //    for (let i = 0; i < names.length; i++){
-   //       if(names[i].textContent.toLowerCase() ){
-
-   //       }
-   //    }
-   // };
+   input.addEventListener('keyup', (e) => {
+      e.preventDefault();
+      console.log(e.target.value);
+      search(input.value, studentNames);
+   });
 };
 
 //Call the functions
