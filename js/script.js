@@ -114,19 +114,13 @@ const searchBar = () => {
    page.appendChild(searchDiv);
 
    //SearchFunction
-   //Variable to go through the student names
    const studentNames = document.querySelectorAll('.student-details h3');
-   /*    for (let i = 0; i < studentNames.length; i++){
-         console.log(studentNames[i].textContent);
-      }; */
-
    const search = (searchInput, names) => {
       for (let i = 0; i < names.length; i++) {
+         var searchResults;
          if ((searchInput.length !== 0) && (names[i].textContent.toLowerCase().includes(searchInput.toLowerCase()))) {
-            // 1c. Create a conditional that checks two conditions:
-            // 1ca. If the `searchInput.value.length` does not equal the digit zero AND `names[i].textContent.toLowerCase()` `includes` `searchInput.value.toLowerCase())`
-            // 1cb. Add the class name 'match` to `names[i]`
             names[i].parentNode.parentNode.style.display = '';
+            searchResults++;
          } else {
             names[i].parentNode.parentNode.style.display = 'none';
          }
@@ -135,13 +129,10 @@ const searchBar = () => {
 
    searchButton.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('Button clicked');
-      console.log(input.value);
       search(input.value, studentNames);
    });
    input.addEventListener('keyup', (e) => {
       e.preventDefault();
-      console.log(e.target.value);
       search(input.value, studentNames);
    });
 };
