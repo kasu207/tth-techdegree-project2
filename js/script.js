@@ -2,14 +2,10 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-/*** 
- * Global Scope
- ***/
 const studentList = document.querySelectorAll('li.student-item');
 const pageLimit = 10;
 const div = document.createElement('div');
+const studentNames = document.querySelectorAll('.student-details h3');
 
 const showPage = (list, page) => {
    var startPage = 0;
@@ -31,10 +27,6 @@ const showPage = (list, page) => {
       }
    }
 }
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
 const appendPageLinks = (list) => {
    const numPages = Math.round(list.length / 10) + 1;
    const pageDiv = document.querySelector('.page');
@@ -63,29 +55,27 @@ const appendPageLinks = (list) => {
       });
    };
 };
-/*** 
-Searchbar 
-***/
-const studentNames = document.querySelectorAll('.student-details h3');
-
 const searchBar = () => {
    const page = document.querySelector('.page-header');
    const searchDiv = document.createElement('div');
-
    searchDiv.className = 'student-search';
+
    const input = document.createElement('input');
-   const searchButton = document.createElement('button');
    searchDiv.appendChild(input);
    input.placeholder = 'Search for students...';
+
+   const searchButton = document.createElement('button');
    searchDiv.appendChild(searchButton);
    searchButton.type = 'submit';
    searchButton.textContent = 'Search';
+
    page.appendChild(searchDiv);
 
    searchButton.addEventListener('click', (e) => {
       e.preventDefault();
       search(input.value, studentNames);
    });
+   
    input.addEventListener('keyup', (e) => {
       e.preventDefault();
       if (input.value != '') {
