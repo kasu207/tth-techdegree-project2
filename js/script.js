@@ -9,6 +9,7 @@ FSJS project 2 - List Filter and Pagination
  ***/
 const studentList = document.querySelectorAll('li.student-item');
 const pageLimit = 10;
+const div = document.createElement('div');
 
 const showPage = (list, page) => {
    var startPage = 0;
@@ -37,7 +38,7 @@ const showPage = (list, page) => {
 const appendPageLinks = (list) => {
    const numPages = Math.round(list.length / 10) + 1;
    const pageDiv = document.querySelector('.page');
-   const div = document.createElement('div');
+
    div.className = 'pagination';
    pageDiv.appendChild(div);
    const ul = document.createElement('ul');
@@ -60,13 +61,13 @@ const appendPageLinks = (list) => {
          }
          e.target.className = 'active';
       });
-
    };
-
 };
 /*** 
 Searchbar 
 ***/
+const studentNames = document.querySelectorAll('.student-details h3');
+
 const searchBar = () => {
    const page = document.querySelector('.page-header');
    const searchDiv = document.createElement('div');
@@ -81,28 +82,33 @@ const searchBar = () => {
    searchButton.textContent = 'Search';
    page.appendChild(searchDiv);
 
-   //SearchFunction
-   const studentNames = document.querySelectorAll('.student-details h3');
-   const search = (searchInput, names) => {
-      let searchResults = [];
-      for (let i = 0; i < names.length; i++) {
-         if ((searchInput.length !== 0) && (names[i].textContent.toLowerCase().includes(searchInput.toLowerCase()))) {
-            names[i].parentNode.parentNode.style.display = '';
-            searchResults.push(names[i].parentNode.parentNode);
-         } else {
-            names[i].parentNode.parentNode.style.display = 'none';
-         }
-      }
-   };
-
    searchButton.addEventListener('click', (e) => {
       e.preventDefault();
       search(input.value, studentNames);
    });
    input.addEventListener('keyup', (e) => {
       e.preventDefault();
-      search(input.value, studentNames);
+      if (input.value != '') {
+         search(input.value, studentNames);
+      } else {
+         showPage(studentList, 1);
+      }
    });
+};
+const search = (searchInput, names) => {
+   let searchResults = [];
+   for (let i = 0; i < names.length; i++) {
+      if ((searchInput.length !== 0) && (names[i].textContent.toLowerCase().includes(searchInput.toLowerCase()))) {
+         names[i].parentNode.parentNode.style.display = '';
+         searchResults.push(names[i].parentNode.parentNode);
+         div.innerHTML = '';
+      } else {
+         names[i].parentNode.parentNode.style.display = 'none';
+         div.innerHTML = '';
+      }
+   }
+   showPage(searchResults, 1);
+   appendPageLinks(searchResults);
 };
 
 //Call the functions
