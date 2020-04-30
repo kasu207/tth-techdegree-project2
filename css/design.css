@@ -42,6 +42,10 @@ body{
       background-color: #4ba6c3;
       color: #fff
     }
+    .page-header .error{
+      color:red;
+      padding-top: 3px;
+    }
 
 .student-list{}
 
