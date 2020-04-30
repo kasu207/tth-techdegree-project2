@@ -92,7 +92,7 @@ const searchBar = () => {
    searchDiv.appendChild(error);
    page.appendChild(searchDiv);
 
-   //Funtction to add search trough student 
+   //Function to add search trough student 
    // accepts parameter: 
    // # searchInput = input in Search Field
    // # names = array of student names
