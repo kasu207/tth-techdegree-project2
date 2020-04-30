@@ -76,23 +76,22 @@ const searchBar = () => {
    const studentNames = document.querySelectorAll('.student-details h3');
    const page = document.querySelector('.page-header');
    const searchDiv = document.createElement('div');
-   searchDiv.className = 'student-search';
-
    const input = document.createElement('input');
+   const searchButton = document.createElement('button');
+   
+   searchDiv.className = 'student-search';
    searchDiv.appendChild(input);
+   searchDiv.appendChild(searchButton);
+   searchDiv.appendChild(error);
 
    input.placeholder = 'Search for students...';
-
-   const searchButton = document.createElement('button');
-   searchDiv.appendChild(searchButton);
 
    searchButton.type = 'submit';
    searchButton.textContent = 'Search';
 
-   searchDiv.appendChild(error);
    page.appendChild(searchDiv);
 
-   //Funtction to add search trough student 
+   //Function to add search trough student 
    // accepts parameter: 
    // # searchInput = input in Search Field
    // # names = array of student names
