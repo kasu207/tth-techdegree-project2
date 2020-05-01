@@ -17,7 +17,7 @@ const showPage = (list, page) => {
    var endPage = 0;
    if (page > 1) {
       startPage = (page * pageLimit) - pageLimit;
-      endPage = (page * pageLimit);
+      endPage = (page * pageLimit)-1;
    } else if (page === 1) {
       startPage = page - 1;
       endPage = startPage + (pageLimit - 1);
@@ -45,7 +45,12 @@ const delError = () => {
 // accepts parameter: 
 // # list = array
 const appendPageLinks = (list) => {
-   const numPages = Math.round(list.length / 10) + 1;
+   let numPages = 0;
+   if(list.length % 10 == 0){
+      numPages = Math.floor(list.length / 10);
+   }else{
+      numPages = Math.floor(list.length / 10) + 1;
+   }
    const pageDiv = document.querySelector('.page');
 
    pageDiv.appendChild(paginationDiv);
@@ -78,7 +83,7 @@ const searchBar = () => {
    const searchDiv = document.createElement('div');
    const input = document.createElement('input');
    const searchButton = document.createElement('button');
-   
+
    searchDiv.className = 'student-search';
    searchDiv.appendChild(input);
    searchDiv.appendChild(searchButton);
@@ -111,9 +116,13 @@ const searchBar = () => {
       }
       if (searchResults == 0) {
          error.textContent = 'Sorry no user found with that name';
+         delPagination();
+      }else{
+         console.log(searchResults.length);
+         showPage(searchResults, 1);
+         appendPageLinks(searchResults);
       }
-      showPage(searchResults, 1);
-      appendPageLinks(searchResults);
+
    };
 
    searchButton.addEventListener('click', (e) => {
